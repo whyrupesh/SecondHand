@@ -1,6 +1,7 @@
 import { View, Image, Text, StyleSheet } from "react-native";
 import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
+import moment from "moment";
 
 export default function ProductListItems({ product }) {
   return (
@@ -12,7 +13,23 @@ export default function ProductListItems({ product }) {
           {product.price}
         </Text>
         <Text>{product.name}</Text>
-        <Text>{product.description}</Text>
+        <Text style={{ width: 150, fontSize: 10, color: "gray" }}>
+          {product.description}
+        </Text>
+        <Text
+          style={{
+            fontSize: 10,
+            backgroundColor: "white",
+            borderRadius: 8,
+            width: 100,
+            padding: 1,
+            marginTop: 2,
+          }}
+        >
+          {" "}
+          Listed:
+          {moment(product.createdAt).format("DD-MMM-YYYY")}
+        </Text>
       </View>
     </View>
   );
