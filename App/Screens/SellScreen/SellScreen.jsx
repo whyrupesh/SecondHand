@@ -1,23 +1,32 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
 import React from "react";
 import Header from "../HomeScreen/Header";
 import { Ionicons } from "@expo/vector-icons";
 import YourListedItems from "./YourListedItems";
+import ProductListingForm from "./ProductListingForm";
 
 export default function SellScreen() {
+
+  const [showModal, setShowModal] = React.useState(false);
   return (
     <View style={styles.container}>
       <Header />
       <View style={styles.content}>
         <Text style={styles.text}>Sell Your Unused Items.</Text>
         <Text>Click the Sell the button to add your own product.</Text>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={()=>setShowModal(true)}>
           <Ionicons name="add-circle-sharp" size={24} color="white" />
           <Text style={styles.buttonText}>Sell</Text>
         </TouchableOpacity>
         {/* Your listed items list */}
         <YourListedItems />
       </View>
+
+      <Modal
+      animationType="slide"
+      visible={showModal}>
+        <ProductListingForm />
+      </Modal>
     </View>
   );
 }
