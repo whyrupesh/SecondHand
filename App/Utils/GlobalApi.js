@@ -3,8 +3,8 @@ import { request, gql } from "graphql-request";
 const Master_URL =
   "https://api-ap-south-1.hygraph.com/v2/cluogldmj1efr07tb2uasenk7/master";
 
-const getProductLists = async () => {
-  const document = gql`
+const getProductList = async () => {
+  const query = gql`
     query getProductLists {
       productLists {
         createdAt
@@ -23,5 +23,5 @@ const getProductLists = async () => {
 };
 
 export default {
-  getProductLists,
+  getProductList,
 };

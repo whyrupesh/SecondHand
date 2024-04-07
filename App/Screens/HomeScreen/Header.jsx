@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     padding: 7,
-    borderColor: "Grey",
+    borderColor: "#000",
     borderWidth: 0.5, // Use borderWidth instead of borderStyle
     borderRadius: 8, // Use numerical value for borderRadius
     width: "85%",
