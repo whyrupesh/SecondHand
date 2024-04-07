@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 import React from "react";
 import { Entypo } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function Header() {
   return (
@@ -15,18 +16,25 @@ export default function Header() {
       </View>
       <View style={styles.line}></View>
 
-      {/* SearchBar section */}
+      {/* SearchBar Section */}
+      <View style={styles.searchContainer}>
+        <TextInput placeholder="Search..." style={styles.searchBar} />
+        <FontAwesome
+          name="search"
+          size={24}
+          color="white"
+          style={styles.searchicon}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "#fff",
   },
   headcontainer: {
-    flex: 1,
     backgroundColor: "#fff",
     marginTop: 50,
     marginLeft: 10,
@@ -35,6 +43,25 @@ const styles = StyleSheet.create({
   line: {
     borderBottomColor: "grey", // You can set the color for your line here
     borderBottomWidth: 1, // You can adjust the thickness of the line her
-    marginBottom: 750,
+  },
+  searchContainer: {
+    display: "flex",
+    flexDirection: "row",
+    margin: 10,
+    justifyContent: "space-between",
+  },
+  searchBar: {
+    padding: 7,
+    borderColor: "Grey",
+    borderWidth: 0.5, // Use borderWidth instead of borderStyle
+    borderRadius: 8, // Use numerical value for borderRadius
+    width: "85%",
+  },
+  searchicon: {
+    backgroundColor: "black",
+    width: 45,
+    height: "auto",
+    borderRadius: 8,
+    padding: 10,
   },
 });
