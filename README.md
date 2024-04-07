@@ -4,5 +4,6 @@ I am using ReactNative for making this.<br><br>
 <h1>>Technology I am using </h1>
 For navigation bar -> ReactNavigation<br>
 For icons -> icons.expo.fy<br>
-For Graphql -> hygraph<br>
+For fetching data from API -> hygraph<br>
 For Authentication -> clerk<br>
+For Auth-Webbrowser -> Expo WebBrowser
