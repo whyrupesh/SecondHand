@@ -1,99 +1,124 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, Image, StyleSheet,TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  KeyboardAvoidingView,
+} from "react-native";
+import React, { useState } from "react";
+import BackNavigationHeader from "../../Components/BackNavigationHeader";
+import ImagePicker from "react-native-image-picker";
+import ImageInputExample from "../../Components/ImageInputExample";
 
-const ProductListingForm = () => {
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
-    const [description, setDescription] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [photo, setPhoto] = useState(null);
+export default function ProductListingForm() {
+  const [productName, setProductName] = useState("");
+  const [price, setprice] = useState("");
+  const [contact, setcontact] = useState("");
+  const [email, setemail] = useState("");
+  const [description, setdescription] = useState("");
 
-    const handleNameChange = (text) => {
-        setName(text);
-    };
+  return (
+    <ScrollView>
+      <KeyboardAvoidingView style={styles.container}>
+        {/* back navigation header */}
+        <BackNavigationHeader />
+        {/* here ask users details about the product */}
+        <View style={styles.formcontainer}>
+          <Text>Fill Details of the Product Below.</Text>
+          {/* Product Name */}
+          <Text style={styles.headerText}>Product Name:</Text>
+          <TextInput
+            style={styles.textIn}
+            placeholder="Product Name"
+            value={productName}
+            onChangeText={(text) => setProductName(text)}
+          />
+          {/* Price */}
+          <Text style={styles.headerText}>Your Asking Price:</Text>
+          <TextInput
+            style={styles.textIn}
+            keyboardType="numeric"
+            placeholder="Price"
+            value={price}
+            onChangeText={(text) => setprice(text)}
+          />
+          {/* contact */}
 
-    const handlePriceChange = (text) => {
-        setPrice(text);
-    };
+          <Text style={styles.headerText}>Your Contact Number:</Text>
+          <TextInput
+            style={styles.textIn}
+            keyboardType="numeric"
+            placeholder="9090909090"
+            value={contact}
+            onChangeText={(text) => setcontact(text)}
+          />
+          {/* email */}
+          <Text style={styles.headerText}>Your Email-ID:</Text>
+          <TextInput
+            style={styles.textIn}
+            placeholder="something@gmail.com"
+            value={email}
+            onChangeText={(text) => setemail(text)}
+          />
+          {/* description */}
+          <Text style={styles.headerText}>Description about Your Product:</Text>
+          <TextInput
+            style={styles.descriptiontextIn}
+            multiline={true}
+            numberOfLines={4}
+            placeholder="Write about your product"
+            value={description}
+            onChangeText={(text) => setdescription(text)}
+          />
 
-    const handleDescriptionChange = (text) => {
-        setDescription(text);
-    };
-
-    const handlePhoneNumberChange = (text) => {
-        setPhoneNumber(text);
-    };
-
-    const handlePhotoChange = (image) => {
-        setPhoto(image);
-    };
-
-    const handleSubmit = () => {
-        // Handle form submission here
-        console.log('Product details:', {
-            name,
-            price,
-            description,
-            phoneNumber,
-            photo,
-        });
-    };
-    
-
-    return (
-        <View style={styles.container}>
-
-            <TextInput
-                style={styles.input}
-                placeholder="Product Name"
-                value={name}
-                onChangeText={handleNameChange}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Price"
-                value={price}
-                onChangeText={handlePriceChange}
-                keyboardType="numeric"
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Description"
-                value={description}
-                onChangeText={handleDescriptionChange}
-                multiline
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Phone Number"
-                value={phoneNumber}
-                onChangeText={handlePhoneNumberChange}
-                keyboardType="phone-pad"
-            />
-            <Button title="Choose Photo" onPress={handlePhotoChange} />
-            {photo && <Image source={{ uri: photo }} style={styles.image} />}
-            <Button title="Submit" onPress={handleSubmit} />
+          {/* Image selector */}
+          <ImageInputExample />
+          {/* submit button */}
+          <TouchableOpacity>
+            <Text style={styles.submitbtn}>Submit</Text>
+          </TouchableOpacity>
         </View>
-    );
-};
+      </KeyboardAvoidingView>
+    </ScrollView>
+  );
+}
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 16,
-    },
-    input: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginBottom: 12,
-        paddingHorizontal: 8,
-    },
-    image: {
-        width: 200,
-        height: 200,
-        marginBottom: 12,
-    },
+  container: {},
+  formcontainer: {
+    margin: 10,
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  textIn: {
+    height: 40,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+  },
+  descriptiontextIn: {
+    height: 100,
+    borderColor: "gray",
+    borderWidth: 1,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    textAlignVertical: "top",
+    padding: 5,
+  },
+  submitbtn: {
+    backgroundColor: "black",
+    padding: 10,
+    borderRadius: 8,
+    color: "white",
+    fontSize: 20,
+    textAlign: "center",
+    elevation: 5,
+  },
 });
-
-export default ProductListingForm;

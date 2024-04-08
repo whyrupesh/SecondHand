@@ -16,7 +16,7 @@ export default function ProductList() {
   const getProductList = async () => {
     try {
       const resp = await GlobalApi.getProductList();
-      console.log("resp", resp);
+      // console.log("resp", resp);
       setProductList(resp.productLists);
     } catch (error) {
       console.error("Error fetching product list:", error);

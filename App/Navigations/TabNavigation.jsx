@@ -7,6 +7,7 @@ import SellScreen from "../Screens/SellScreen/SellScreen";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import SellNavigation from "./SellNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +31,7 @@ export default function TabNavigation() {
       />
       <Tab.Screen
         name="Sell"
-        component={SellScreen}
+        component={SellNavigation}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="sell" size={24} color={color} />
