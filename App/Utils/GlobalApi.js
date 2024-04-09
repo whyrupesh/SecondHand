@@ -60,9 +60,25 @@ const createSellerProduct = async (data) => {
   const mutationQuery =
     gql`
     mutation createSellerProduct {
-      createSellerProduct(data: { productName: "` +
+      createSellerProduct(
+        data: {
+          productName: "` +
     data.name +
-    `" }) {
+    `"
+          price: "` +
+    data.price +
+    `"
+          contact: "` +
+    data.contact +
+    `"
+          description: "` +
+    data.description +
+    `"
+          emailid: "` +
+    data.emailid +
+    `"
+        }
+      ) {
         id
       }
       publishManySellerProducts(to: PUBLISHED) {
