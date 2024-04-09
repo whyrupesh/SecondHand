@@ -76,7 +76,9 @@ const createSellerProduct = async (data) => {
     `"
           emailid: "` +
     data.emailid +
-    `"
+    `"productImage: {connect: {id: "` +
+    data.image +
+    `"}}
         }
       ) {
         id

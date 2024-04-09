@@ -12,6 +12,8 @@ import React from "react";
 import BackNavigationHeader from "../../Components/BackNavigationHeader";
 import { useState } from "react";
 import GlobalApi from "../../Utils/GlobalApi";
+import ImageInput from "../../Components/ImageInput";
+import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 
 export default function ProductForm() {
   const [proName, setProductName] = useState("");
@@ -19,6 +21,7 @@ export default function ProductForm() {
   const [contact, setcontact] = useState("");
   const [email, setemail] = useState("");
   const [description, setdescription] = useState("");
+  const [imageUri, setImageUri] = useState(null);
 
   //create Booking Method
   const createNewProduct = () => {
@@ -28,6 +31,7 @@ export default function ProductForm() {
       description: description,
       contact: contact,
       emailId: email,
+      image: imageUri,
     };
     GlobalApi.createSellerProduct(data)
       .then((resp) => {
@@ -39,62 +43,93 @@ export default function ProductForm() {
         ToastAndroid.show("Failed to create product", ToastAndroid.LONG);
       });
   };
+
+  const selectImage = () => {
+    const options = {
+      title: "Select Image",
+      storageOptions: {
+        // skipBackup: true,
+        path: "images",
+        saveToPhotos: true,
+      },
+    };
+
+    launchImageLibrary(options, (response) => {
+      console.log(response);
+      //   if (response.didCancel) {
+      //     console.log("User cancelled image picker");
+      //   } else if (response.error) {
+      //     console.log("ImagePicker Error: ", response.error);
+      //   } else {
+      //     // Update the image URI state
+      //     setImageUri(response.uri);
+      //   }
+    });
+  };
   return (
     <ScrollView>
       <KeyboardAvoidingView style={styles.container}>
         <BackNavigationHeader />
-        {/* here ask users details about the product */}
-        <Text>Fill Deeeetails of the Product Below.</Text>
-        {/* Product Name */}
-        <Text style={styles.headerText}>Product Name:</Text>
-        <TextInput
-          style={styles.textIn}
-          placeholder="Product Name"
-          value={proName}
-          onChangeText={(text) => setProductName(text)}
-        />
-        {/* Price */}
-        <Text style={styles.headerText}>Your Asking Price:</Text>
-        <TextInput
-          style={styles.textIn}
-          keyboardType="numeric"
-          placeholder="Price"
-          value={price}
-          onChangeText={(text) => setprice(text)}
-        />
-        {/* contact */}
+        <View style={{ margin: 15 }}>
+          {/* here ask users details about the product */}
+          <Text>Fill Details of the Product Below.</Text>
+          {/* Product Name */}
+          <Text style={styles.headerText}>Product Name:</Text>
+          <TextInput
+            style={styles.textIn}
+            placeholder="Product Name"
+            value={proName}
+            onChangeText={(text) => setProductName(text)}
+          />
+          {/* Price */}
+          <Text style={styles.headerText}>Your Asking Price:</Text>
+          <TextInput
+            style={styles.textIn}
+            keyboardType="numeric"
+            placeholder="Price"
+            value={price}
+            onChangeText={(text) => setprice(text)}
+          />
+          {/* contact */}
 
-        <Text style={styles.headerText}>Your Contact Number:</Text>
-        <TextInput
-          style={styles.textIn}
-          keyboardType="numeric"
-          placeholder="9090909090"
-          value={contact}
-          onChangeText={(text) => setcontact(text)}
-        />
-        {/* email */}
-        <Text style={styles.headerText}>Your Email-ID:</Text>
-        <TextInput
-          style={styles.textIn}
-          placeholder="something@gmail.com"
-          value={email}
-          onChangeText={(text) => setemail(text)}
-        />
-        {/* description */}
-        <Text style={styles.headerText}>Description about Your Product:</Text>
-        <TextInput
-          style={styles.descriptiontextIn}
-          multiline={true}
-          numberOfLines={4}
-          placeholder="Write about your product.This helps to reach more buyer."
-          value={description}
-          onChangeText={(text) => setdescription(text)}
-        />
-
-        {/* submit button */}
-        <TouchableOpacity onPress={() => createNewProduct()}>
-          <Text style={styles.submitbtn}>Submit</Text>
+          <Text style={styles.headerText}>Your Contact Number:</Text>
+          <TextInput
+            style={styles.textIn}
+            keyboardType="numeric"
+            placeholder="9090909090"
+            value={contact}
+            onChangeText={(text) => setcontact(text)}
+          />
+          {/* email */}
+          <Text style={styles.headerText}>Your Email-ID:</Text>
+          <TextInput
+            style={styles.textIn}
+            placeholder="something@gmail.com"
+            value={email}
+            onChangeText={(text) => setemail(text)}
+          />
+          {/* description */}
+          <Text style={styles.headerText}>Description about Your Product:</Text>
+          <TextInput
+            style={styles.descriptiontextIn}
+            multiline={true}
+            numberOfLines={4}
+            placeholder="Write about your product.This helps to reach more buyer."
+            value={description}
+            onChangeText={(text) => setdescription(text)}
+          />
+          {/* Image selector */}
+          {/* Image picker */}
+          {/* <TouchableOpacity onPress={selectImage}>
+          <Text style={styles.button}>Select Image</Text>
         </TouchableOpacity>
+        {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />} */}
+          <ImageInput />
+          {/* submit button */}
+          <TouchableOpacity onPress={() => createNewProduct()}>
+            <Text style={styles.submitbtn}>Submit</Text>
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
     </ScrollView>
   );
@@ -135,5 +170,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     elevation: 5,
+  },
+  image: {
+    width: 200,
+    height: 200,
+    resizeMode: "cover",
+    marginBottom: 10,
   },
 });

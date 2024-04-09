@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import BackNavigationHeader from "../../Components/BackNavigationHeader";
-import ImageInputExample from "../../Components/ImageInputExample";
+import ImageInputExample from "../../Components/ImageInput";
 import GlobalApi from "../../Utils/GlobalApi";
 
 export default function ProductListingForm() {
@@ -47,7 +47,7 @@ export default function ProductListingForm() {
         <BackNavigationHeader />
         {/* here ask users details about the product */}
         <View style={styles.formcontainer}>
-          <Text>Fill Deeeetails of the Product Below.</Text>
+          <Text>Fill Details of the Product Below.</Text>
           {/* Product Name */}
           <Text style={styles.headerText}>Product Name:</Text>
           <TextInput
@@ -95,7 +95,7 @@ export default function ProductListingForm() {
           />
 
           {/* Image selector */}
-          {/* <ImageInputExample /> */}
+          <ImageInputExample />
           {/* submit button */}
           <TouchableOpacity onPress={() => createNewProduct()}>
             <Text style={styles.submitbtn}>Submit</Text>
