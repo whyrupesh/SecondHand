@@ -6,11 +6,12 @@ import {
   TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
+  ToastAndroid,
 } from "react-native";
 import React, { useState } from "react";
 import BackNavigationHeader from "../../Components/BackNavigationHeader";
-import ImagePicker from "react-native-image-picker";
 import ImageInputExample from "../../Components/ImageInputExample";
+import GlobalApi from "../../Utils/GlobalApi";
 
 export default function ProductListingForm() {
   const [productName, setProductName] = useState("");
@@ -19,6 +20,26 @@ export default function ProductListingForm() {
   const [email, setemail] = useState("");
   const [description, setdescription] = useState("");
 
+  //create Booking Method
+  const createNewProduct = () => {
+    const data = {
+      name: productName,
+      price: price, // Convert to integer
+      description: description,
+      contact: contact, // Convert to integer
+      emailId: email,
+    };
+    GlobalApi.createProductList(data)
+      .then((resp) => {
+        console.log("Resp", resp);
+        ToastAndroid.show("Booking create Successfully", ToastAndroid.LONG);
+      })
+      .catch((error) => {
+        console.error("Error creating product:", error);
+        ToastAndroid.show("Failed to create product", ToastAndroid.LONG);
+      });
+  };
+
   return (
     <ScrollView>
       <KeyboardAvoidingView style={styles.container}>
@@ -26,7 +47,7 @@ export default function ProductListingForm() {
         <BackNavigationHeader />
         {/* here ask users details about the product */}
         <View style={styles.formcontainer}>
-          <Text>Fill Details of the Product Below.</Text>
+          <Text>Fill Deeeetails of the Product Below.</Text>
           {/* Product Name */}
           <Text style={styles.headerText}>Product Name:</Text>
           <TextInput
@@ -74,9 +95,9 @@ export default function ProductListingForm() {
           />
 
           {/* Image selector */}
-          <ImageInputExample />
+          {/* <ImageInputExample /> */}
           {/* submit button */}
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => createNewProduct()}>
             <Text style={styles.submitbtn}>Submit</Text>
           </TouchableOpacity>
         </View>

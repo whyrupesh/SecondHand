@@ -22,6 +22,60 @@ const getProductList = async () => {
   return result;
 };
 
+const createProductList = async (data) => {
+  const mutationQuery =
+    gql`
+    mutation createProductList {
+      createProductList(
+        data: {
+          name: "` +
+    data.name +
+    `"
+          price: "` +
+    data.price +
+    `"
+          description: "` +
+    data.description +
+    `"
+    contact: "` +
+    data.contact +
+    `"
+           } }
+          
+          emailid: "` +
+    data.emailid +
+    `"
+        }
+      ) {
+        id
+      }
+      
+    }
+  `;
+  const result = await request(Master_URL, mutationQuery);
+  return result;
+};
+
+const createSellerProduct = async (data) => {
+  const mutationQuery =
+    gql`
+    mutation createSellerProduct {
+      createSellerProduct(data: { productName: "` +
+    data.name +
+    `" }) {
+        id
+      }
+      publishManySellerProducts(to: PUBLISHED) {
+        count
+      }
+    }
+  `;
+  const result = await request(Master_URL, mutationQuery);
+  return result;
+};
+
 export default {
   getProductList,
+  createProductList,
+  createSellerProduct,
 };

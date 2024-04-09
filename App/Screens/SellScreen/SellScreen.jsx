@@ -17,7 +17,7 @@ export default function SellScreen() {
         <Text>Click the Sell the button to add your own product.</Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.push("ProductListingForm")}
+          onPress={() => navigation.push("ProductForm")}
         >
           <Ionicons name="add-circle-sharp" size={24} color="white" />
           <Text style={styles.buttonText}>Sell</Text>
@@ -25,9 +25,6 @@ export default function SellScreen() {
         {/* Your listed items list */}
         <YourListedItems />
       </View>
-      {/* <Modal animationType="slide" visible={showModal}>
-        <ProductListingForm />
-      </Modal> */}
     </View>
   );
 }
