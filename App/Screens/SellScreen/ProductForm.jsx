@@ -13,7 +13,6 @@ import BackNavigationHeader from "../../Components/BackNavigationHeader";
 import { useState } from "react";
 import GlobalApi from "../../Utils/GlobalApi";
 import ImageInput from "../../Components/ImageInput";
-import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 
 export default function ProductForm() {
   const [proName, setProductName] = useState("");
@@ -23,6 +22,11 @@ export default function ProductForm() {
   const [description, setdescription] = useState("");
   const [imageUri, setImageUri] = useState(null);
 
+  const handleImageSelect = (uri) => {
+    console.log("Selected Image URI:", uri);
+    setImageUri(uri);
+  };
+
   //create Booking Method
   const createNewProduct = () => {
     const data = {
@@ -31,12 +35,12 @@ export default function ProductForm() {
       description: description,
       contact: contact,
       emailId: email,
-      image: imageUri,
+      productImage: { uploadUrl: imageUri },
     };
     GlobalApi.createSellerProduct(data)
       .then((resp) => {
         console.log("Resp", resp);
-        ToastAndroid.show("Booking create Successfully", ToastAndroid.LONG);
+        ToastAndroid.show("Product create Successfully", ToastAndroid.LONG);
       })
       .catch((error) => {
         console.error("Error creating product:", error);
@@ -44,28 +48,6 @@ export default function ProductForm() {
       });
   };
 
-  const selectImage = () => {
-    const options = {
-      title: "Select Image",
-      storageOptions: {
-        // skipBackup: true,
-        path: "images",
-        saveToPhotos: true,
-      },
-    };
-
-    launchImageLibrary(options, (response) => {
-      console.log(response);
-      //   if (response.didCancel) {
-      //     console.log("User cancelled image picker");
-      //   } else if (response.error) {
-      //     console.log("ImagePicker Error: ", response.error);
-      //   } else {
-      //     // Update the image URI state
-      //     setImageUri(response.uri);
-      //   }
-    });
-  };
   return (
     <ScrollView>
       <KeyboardAvoidingView style={styles.container}>
@@ -124,7 +106,7 @@ export default function ProductForm() {
           <Text style={styles.button}>Select Image</Text>
         </TouchableOpacity>
         {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />} */}
-          <ImageInput />
+          <ImageInput onImageSelect={handleImageSelect} />
           {/* submit button */}
           <TouchableOpacity onPress={() => createNewProduct()}>
             <Text style={styles.submitbtn}>Submit</Text>

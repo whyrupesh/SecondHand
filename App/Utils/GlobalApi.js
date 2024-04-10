@@ -22,40 +22,6 @@ const getProductList = async () => {
   return result;
 };
 
-const createProductList = async (data) => {
-  const mutationQuery =
-    gql`
-    mutation createProductList {
-      createProductList(
-        data: {
-          name: "` +
-    data.name +
-    `"
-          price: "` +
-    data.price +
-    `"
-          description: "` +
-    data.description +
-    `"
-    contact: "` +
-    data.contact +
-    `"
-           } }
-          
-          emailid: "` +
-    data.emailid +
-    `"
-        }
-      ) {
-        id
-      }
-      
-    }
-  `;
-  const result = await request(Master_URL, mutationQuery);
-  return result;
-};
-
 const createSellerProduct = async (data) => {
   const mutationQuery =
     gql`
@@ -76,10 +42,9 @@ const createSellerProduct = async (data) => {
     `"
           emailid: "` +
     data.emailid +
-    `"productImage: {connect: {id: "` +
-    data.image +
-    `"}}
-        }
+    `"productImage: {create: {uploadUrl: "` +
+    data.productImage.uploadUrl +
+    `"}}}
       ) {
         id
       }
@@ -92,8 +57,27 @@ const createSellerProduct = async (data) => {
   return result;
 };
 
+const getSellerProducts = async () => {
+  const query = gql`
+    query getSellerProducts {
+      sellerProduct {
+        productName
+        price
+        contact
+        emailid
+        description
+        productImage {
+          url
+        }
+      }
+    }
+  `;
+  const result = await request(Master_URL, query);
+  return result;
+};
+
 export default {
   getProductList,
-  createProductList,
   createSellerProduct,
+  getSellerProducts,
 };

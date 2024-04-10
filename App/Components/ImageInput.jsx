@@ -1,3 +1,4 @@
+// In the ImageInput component file
 import React, { useState } from "react";
 import {
   View,
@@ -9,15 +10,14 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
-export default function ImageInput() {
+export default function ImageInput({ onImageSelect }) {
   // Stores the selected image URI
   const [file, setFile] = useState(null);
 
   // Stores any error message
   const [error, setError] = useState(null);
 
-  // Function to pick an image from
-  //the device's media library
+  // Function to pick an image from the device's media library
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -38,8 +38,8 @@ export default function ImageInput() {
         // Clear any previous errors
         setError(null);
 
-        // Add console log to print uri after selection
-        console.log("Selected Image URI:", result.assets[0].uri);
+        // Pass the selected image URI to the onImageSelect prop
+        onImageSelect(result.assets[0].uri);
       } else {
         // If the selection is cancelled, clear the file state variable
         setFile(null);
@@ -56,21 +56,21 @@ export default function ImageInput() {
         <Text style={styles.buttonText}>Choose Image</Text>
       </TouchableOpacity>
 
-      {/* Conditionally render the image  
-            or error message */}
+      {/* Conditionally render the image or error message */}
       {file ? (
         // Display the selected image
         <View style={styles.imageContainer}>
           <Image source={{ uri: file }} style={styles.image} />
         </View>
       ) : (
-        // Display an error message if there's
-        // an error or no image selected
+        // Display an error message if there's an error or no image selected
         <Text style={styles.errorText}>{error}</Text>
       )}
     </View>
   );
 }
+
+// Styles...
 
 const styles = StyleSheet.create({
   container: {
